@@ -2,14 +2,27 @@ cache:
   paths:
     - __pycache__
 
-stages:
-  - tests
+on:
+  push:
+    brances: [ main ]
 
-testcases:
-  stage: tests
-  image: python:latest
-  before_script:
-    - python -m pip install -r requirements.txt
-  script:
-    - pytest tests.py
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set-up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: Installing requirements
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests.py
 
