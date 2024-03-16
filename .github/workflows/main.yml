@@ -1,6 +1,4 @@
-cache:
-  paths:
-    - __pycache__
+name: Tests
 
 on:
   push:
